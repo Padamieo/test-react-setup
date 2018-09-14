@@ -47,7 +47,16 @@ module.exports = {
 				plugins: ['transform-decorators-legacy'],
 				cacheDirectory: true,
 			},
-		}]
+		},
+		{
+			test: /\.css$/,
+			exclude: /node_modules/,
+			use: [
+				'style-loader',
+				'css-loader?sourceMap',
+			],
+		},
+		]
 	},
 	plugins: [
 		new CleanWebpackPlugin(['dist'], {root: process.cwd()}),

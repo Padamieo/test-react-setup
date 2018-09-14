@@ -1,0 +1,15 @@
+body{
+	font-size: 5rem;
+	margin: 2%;
+}
+
+input{
+	width: 100%;
+	font-size: 5rem;
+	border: 1px solid black;
+}
+
+button{
+	width: 100%;
+	font-size: 5rem;
+}
