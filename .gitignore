@@ -1,3 +1,4 @@
+# default generated not to be tracked
 coverage/
 dist/
 node_modules/
@@ -5,3 +6,6 @@ node_modules/
 *.iml
 npm-debug.log
 package-lock.json
+
+# Serverless directories
+.serverless

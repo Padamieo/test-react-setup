@@ -1,81 +1,53 @@
 import React from 'react';
-import Amplify, { Auth, Storage } from 'aws-amplify';
+import Amplify from 'aws-amplify';
 // import { withAuthenticator } from 'aws-amplify-react';
+import App from './App';
 import ReactDOM from 'react-dom';
 
+import Routes from './Routes';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+import config from './config';
+
+//Amplify.Logger.LOG_LEVEL = 'DEBUG';
 import 'index.css';
 
-//import AWS from 'AWS-SDK';
-console.log(Amplify);
-
 Amplify.configure({
+	Auth:{
+		mandatorySignIn: true,
+		region: config.cognito.REGION,
+		userPoolId: config.cognito.USER_POOL_ID,
+		identityPoolId: config.cognito.IDENTITIY_POOL_ID,
+		userPoolWebClientId: config.cognito.APP_CLIENT_ID,
+
+		// OPTIONAL - Configuration for cookie storage
+		// cookieStorage: {
+		// // REQUIRED - Cookie domain (only required if cookieStorage is provided)
+		// 		domain: 'localhost:3000',
+		// // OPTIONAL - Cookie path
+		// 		path: '/',
+		// // OPTIONAL - Cookie expiration in days
+		// 		expires: 365,
+		// // OPTIONAL - Cookie secure flag
+		// 		secure: true
+		// },
+
+		authenticationFlowType: 'USER_PASSWORD_AUTH'
+	},
+	API: {
+		endpoints: [
+			{
+				name: 'testAPI',
+				endpoint: config.apiGateway.URL,
+				region: config.apiGateway.REGION
+			}
+		]
+	}
 });
 
-function 	Input(props){
-	return (
-		<div>
-			<label>{props.name}</label>
-			<input type={props.name} name={props.name} value={props.value} onChange={props.handleChange} />
-		</div>
-	)
-}
-
-class App extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-		    username: '',
-		    password: ''
-		}
-
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleChange = this.handleChange.bind(this);
-	}
-
-	render() {
-		return (
-			<div>
-				<form type="submit">
-					<Input name={'username'} value={this.state.username} handleChange={this.handleChange} />
-					<Input name={'password'} value={this.state.password} handleChange={this.handleChange} />
-					<button onClick={this.handleSubmit} >Submit</button>
-				</form>
-			</div>
-		);
-	}
-
-	handleChange(event) {
-		this.setState({[event.target.name]: event.target.value});
-	}
-
-	handleSubmit(e) {
-		console.log('submitting');
-		console.log(this.state);
-		Auth.signIn(this.sate.username, this.state.password)
-    .then(user => console.log('user', user))
-    .catch(err => console.log('error', err));
-
-		// var options = {};
-		// options.scope = 'profile';
-		// amazon.Login.authorize(options, function(response) {
-		// 	if ( response.error ) {
-		// 		alert('oauth error ' + response.error);
-		// 	return;
-		// 	}
-		// 	amazon.Login.retrieveProfile(response.access_token, function(response) {
-		// 		alert('Hello, ' + response.profile.Name);
-		// 		alert('Your e-mail address is ' + response.profile.PrimaryEmail);
-		// 		alert('Your unique ID is ' + response.profile.CustomerId);
-		// 		if ( window.console && window.console.log )
-		// 			window.console.log(response);
-		// 	});
-		// });
-
-	}
-}
-
-
 ReactDOM.render(
-	<App />,
+	<Router>
+		<App />
+	</Router>,
 	document.getElementById('root')
 );

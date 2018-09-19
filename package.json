@@ -13,7 +13,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "webpack-dev-server --config config/webpack.dev.js --mode development",
-    "build": "webpack --env=prod --progress --profile --colors --mode production",
+    "build": "webpack --config config/webpack.prod.js --env=prod --progress --profile --colors --mode production",
     "lint": "eslint ./src/**.js",
     "coverage": "jest --coverage --config=config/jest.config.js",
     "test": "jest --config=config/jest.config.js",
@@ -47,12 +47,13 @@
     "webpack-merge": "^4.1.2"
   },
   "dependencies": {
-    "aws-amplify": "^1.0.11",
-    "aws-amplify-react": "^2.0.1",
-    "aws-sdk": "^2.275.1",
+    "aws-amplify": "^1.1.1",
+    "aws-amplify-react": "^2.0.2",
+    "aws-sdk": "^2.316.0",
     "jsonfile": "^4.0.0",
     "raw-loader": "^0.5.1",
     "react": "^16.4.1",
+    "react-router-dom": "^4.3.1",
     "url-loader": "^1.0.1"
   }
 }
