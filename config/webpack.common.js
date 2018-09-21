@@ -24,38 +24,40 @@ module.exports = {
 		modules: [path.join(process.cwd(), 'src'), 'node_modules']
 	},
 	module: {
-		rules: [{
-			test: /\.js$/,
-			loader: 'babel-loader',
-			exclude: /node_modules/,
-			options: {
-				presets: [
-					[
-						'env',
-						{
-							targets: {
-								browsers: ['>1%', 'last 2 versions', 'not ie < 10'],
-								uglify: true,
+		rules: [
+			{
+				test: /\.jsx?$/,
+				loader: 'babel-loader',
+				exclude: /node_modules/,
+				options: {
+					presets: [
+						[
+							'env',
+							{
+								targets: {
+									browsers: ['>1%', 'last 2 versions', 'not ie < 10'],
+									uglify: true,
+								},
+								modules: false,
+								useBuiltIns: false,
+								debug: false,
 							},
-							modules: false,
-							useBuiltIns: false,
-							debug: false,
-						},
+						],
+						'stage-2',
+						'react',
 					],
-					'react',
-				],
-				plugins: ['transform-decorators-legacy'],
-				cacheDirectory: true,
+					plugins: ['react-hot-loader/babel', 'transform-decorators-legacy'],
+					cacheDirectory: true,
+				},
 			},
-		},
-		{
-			test: /\.css$/,
-			exclude: /node_modules/,
-			use: [
-				'style-loader',
-				'css-loader?sourceMap',
-			],
-		},
+			{
+				test: /\.css$/,
+				exclude: /node_modules/,
+				use: [
+					'style-loader',
+					'css-loader?sourceMap',
+				],
+			},
 		]
 	},
 	plugins: [

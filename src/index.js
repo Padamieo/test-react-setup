@@ -3,9 +3,8 @@ import Amplify from 'aws-amplify';
 // import { withAuthenticator } from 'aws-amplify-react';
 import App from './App';
 import ReactDOM from 'react-dom';
-
-import Routes from './Routes';
 import { BrowserRouter as Router } from 'react-router-dom';
+import Routes from './Routes';
 
 import config from './config';
 
