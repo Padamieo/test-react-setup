@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
 import { Auth } from 'aws-amplify';
 
-function 	Input(props){
-	return (
-		<div>
-			<label>{props.name}</label>
-			<input type={props.name} name={props.name} value={props.value} onChange={props.handleChange} />
-		</div>
-	)
-}
+import { Input } from 'components/Input';
 
 //class Login extends React.Component {
 export default class Login extends Component {
@@ -30,8 +23,8 @@ export default class Login extends Component {
 			<div>
 				<a href="#" onClick={this.checkAuth}>signup</a>
 				<form type="submit">
-					<Input name={'username'} value={this.state.username} handleChange={this.handleChange} />
-					<Input name={'password'} value={this.state.password} handleChange={this.handleChange} />
+					<Input label="Username" name="username" type="text" value={this.state.username} setValue={ this.handleChange } />
+					<Input label="Password" name="password" type="text" value={this.state.password} setValue={ this.handleChange } />
 					<button onClick={this.handleSubmit} >Submit</button>
 				</form>
 			</div>

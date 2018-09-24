@@ -9,7 +9,8 @@ export default class register extends Component {
 		super(props);
 		this.state = {
 			username: '',
-			password: ''
+			password: '',
+			email: '',
 		}
 
 		this.checkAuth = this.checkAuth.bind(this);
@@ -23,8 +24,9 @@ export default class register extends Component {
 			<div>
 				<a href="#" onClick={this.checkAuth}>signup</a>
 				<form type="submit">
-					<Input label="submit"></Input>
-					<Input label={'password'} type={'password'} value={this.state.password} handleChange={this.handleChange} />
+					<Input label="Username" name="username" type="text" value={this.state.username} setValue={ this.handleChange } />
+					<Input label="Password" name="password" type="password" value={this.state.password} setValue={ this.handleChange } />
+					<Input label="Email" name="email" type="text" value={this.state.email} setValue={ this.handleChange } />
 					<button onClick={this.handleSubmit} >Submit</button>
 				</form>
 			</div>
@@ -35,9 +37,20 @@ export default class register extends Component {
 		this.setState({[event.target.name]: event.target.value});
 	}
 
+	setValue = (value) => {
+		const prevValue = this.props.value;
+
+		this.setState({
+			value,
+			dirty: this.state.dirty || (prevValue !== null && value !== prevValue),
+		});
+
+	};
+
 	checkAuth(e) {
 		e.preventDefault();
 		console.log('checkAuth');
+		console.log(this.state.username, this.state.password);
 
 		// var params: {
 		// 	Bucket: 'test-bucket-react-cognito'
@@ -54,9 +67,9 @@ export default class register extends Component {
 		// 	else     console.log(data);           // successful response
 		// });
 
-		Auth.currentAuthenticatedUser()
-    .then(data => console.log(data))
-    .catch(err => console.log('error', err));
+		// Auth.currentAuthenticatedUser()
+    // .then(data => console.log(data))
+    // .catch(err => console.log('error', err));
 		// let session = Auth.currentSession();
 		// console.log(session);
 	}
