@@ -31,7 +31,7 @@ Amplify.configure({
 		// 		secure: true
 		// },
 
-		authenticationFlowType: 'USER_PASSWORD_AUTH'
+		// authenticationFlowType: 'USER_PASSWORD_AUTH'
 	},
 	API: {
 		endpoints: [

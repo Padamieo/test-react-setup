@@ -8,8 +8,8 @@ export default class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-		    username: '',
-		    password: ''
+			username: '',
+			password: ''
 		}
 
 		this.checkAuth = this.checkAuth.bind(this);
@@ -61,24 +61,45 @@ export default class Login extends Component {
 		// console.log(session);
 	}
 
+	// handleSubmit(e) {
+	// 	e.preventDefault();
+	// 	console.log('handleSubmit');
+	// 	console.log(this.state.username, this.state.password);
+	//
+	// 	Auth.signIn(this.state.username, this.state.password)
+	// 	.then(user => {
+	//
+	// 		.then(err => console.log('done', err))
+	// 		.catch(err => console.log('error', err));
+	// 	})
+  //   .catch(err => console.log('error', err));
+	//
+	// 	// Auth.currentAuthenticatedUser()
+	// 	// .then(user => {
+	//   //   return Auth.changePassword(user, 'Pancakes4You!', 'You4pancakes!');
+	// 	// })
+	// 	// .then(data => console.log(data))
+	// 	// .catch(err => console.log(err));
+	// }
+
 	handleSubmit(e) {
 		e.preventDefault();
 		console.log('handleSubmit');
 		console.log(this.state.username, this.state.password);
 
 		Auth.signIn(this.state.username, this.state.password)
-		.then(user => {
-			return Auth.changePassword(user, 'Pancakes4You!', 'You4pancakes!')
-			.then(err => console.log('done', err))
+			.then(user => {
+				console.log('user: ' + JSON.stringify(user));
+				const { requiredAttributes } = user.challengeParam;
+				if (!Auth || typeof Auth.completeNewPassword !== 'function') {
+					throw new Error('No Auth module found, please ensure @aws-amplify/auth is imported');
+				}
+				Auth.completeNewPassword(user, this.state.password, requiredAttributes)
+				.then(user => {
+					//logger.debug('complete new password', user);
+				})
+				.catch(err => console.error('completeNewPassword errors: ' + err));
+			})
 			.catch(err => console.log('error', err));
-		})
-    .catch(err => console.log('error', err));
-
-		// Auth.currentAuthenticatedUser()
-		// .then(user => {
-	  //   return Auth.changePassword(user, 'Pancakes4You!', 'You4pancakes!');
-		// })
-		// .then(data => console.log(data))
-		// .catch(err => console.log(err));
 	}
 }
