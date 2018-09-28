@@ -3,8 +3,13 @@ import { Auth } from 'aws-amplify';
 
 import { Input } from 'components/Input';
 
+//redux
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import { voteAngular } from 'actions'
+
 //class Login extends React.Component {
-export default class Login extends Component {
+export class Logout extends Component {
 	constructor(props) {
 		super(props);
 
@@ -13,19 +18,27 @@ export default class Login extends Component {
 			password: ''
 		}
 
-		//console.log(this.prop);
+		//this.store = this.props.store;
+		console.log(this.props);
 
 		this.getCurrent = this.getCurrent.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
+	handleVoteAngular = () => {
+		this.props.voteAngular();
+		//console.log(this.store.getState());
+	}
+
 	render() {
 		return (
 			<div>
+				<p>{this.props.angular}</p>
 				<a href="#" onClick={this.getCurrent}>get current</a>
 				<form type="submit">
 					<button onClick={this.handleSubmit} >Logout</button>
 				</form>
+				<a href="#" onClick={this.handleVoteAngular}>Logout</a>
 			</div>
 		);
 	}
@@ -56,3 +69,13 @@ export default class Login extends Component {
 			.catch(err => console.log(err));
 	}
 }
+
+const mapStateToProps = ({ angular }) => ({
+	angular
+});
+
+const mapDispatchToProps = {
+	voteAngular
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Logout);

@@ -5,15 +5,16 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			loggedIn: false
-		};
+		// this.state = {
+		// 	loggedIn: false
+		// };
+		this.store = this.props.store;
 	}
 
 	render() {
 		return (
 			<div className="App">
-				<Routes childProps={this.state} />
+				<Routes store={this.store} />
 			</div>
 		);
 	}

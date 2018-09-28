@@ -11,6 +11,12 @@ import config from './config';
 //Amplify.Logger.LOG_LEVEL = 'DEBUG';
 import 'index.css';
 
+//redux
+import {Provider} from 'react-redux';
+import { createStore } from 'redux';
+import reducers from './reducers';
+let store = createStore(reducers);
+
 Amplify.configure({
 	Auth:{
 		mandatorySignIn: true,
@@ -44,9 +50,16 @@ Amplify.configure({
 	}
 });
 
-ReactDOM.render(
-	<Router>
-		<App />
-	</Router>,
-	document.getElementById('root')
-);
+function render() {
+	ReactDOM.render(
+		<Provider store={store}>
+			<Router>
+				<App store={ store } />
+			</Router>
+		</Provider>,
+		document.getElementById('root')
+	);
+}
+
+store.subscribe(render);
+render();
